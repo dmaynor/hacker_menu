@@ -87,6 +87,18 @@ sudo ldconfig
 
 ## Install
 
+### Quick install (recommended)
+
+```bash
+git clone https://github.com/dmaynor/hacker_menu.git
+cd hacker_menu
+./install.sh
+```
+
+This installs all dependencies, copies scripts to `~/bin`, sets up the udev rule, and enables the systemd service.
+
+### Manual install
+
 1. Copy scripts to `~/bin`:
 ```bash
 mkdir -p ~/bin
