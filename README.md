@@ -6,20 +6,20 @@ Pressing the haptic thumb button on the MX Master 4 pops up a dark-themed menu w
 
 ## Menu Actions
 
-| Action | Description |
-|--------|-------------|
-| Claude Code | Opens interactive Claude Code in a new terminal |
-| Claude Selection | Sends highlighted text to Claude non-interactively |
-| DPI Cycle | Cycles through 800/1200/1600/2400/3200 DPI |
-| Screenshot OCR | Select screen region, OCR it, copy text to clipboard |
-| Git Status | Show current git branch and status |
-| Network Info | Show local/public IP, listening ports, VPN status |
-| Clipboard Run | Execute clipboard contents as a shell command |
-| Lock Screen | Lock the session |
-| Kill Window | Click any window to kill it |
-| Color Picker | Pick a color from screen (requires gpick) |
-| Quick Note | Type a note, saved to ~/notes.txt with timestamp |
-| System Monitor | Show CPU, memory, disk, temp, load average |
+| Action | Description | Dependencies |
+|--------|-------------|--------------|
+| Claude Code | Opens interactive Claude Code in a new terminal | `claude` ([Claude Code](https://docs.anthropic.com/en/docs/claude-code)), `cosmic-term` |
+| Claude Selection | Sends highlighted text to Claude non-interactively | `claude`, `cosmic-term`, `wl-clipboard` |
+| DPI Cycle | Cycles through 800/1200/1600/2400/3200 DPI | `ratbagctl` ([libratbag](https://github.com/libratbag/libratbag)), `libnotify-bin` |
+| Screenshot OCR | Select screen region, OCR it, copy text to clipboard | `gnome-screenshot`, `tesseract-ocr`, `xclip`, `libnotify-bin` |
+| Git Status | Show current git branch and status | `git`, `libnotify-bin` |
+| Network Info | Show local/public IP, listening ports, VPN status | `curl`, `libnotify-bin` |
+| Clipboard Run | Execute clipboard contents as a shell command | `xclip`, `libnotify-bin` |
+| Lock Screen | Lock the session | None (uses `loginctl`) |
+| Kill Window | Click any window to kill it | `xkill` (from `x11-utils`), `libnotify-bin` |
+| Color Picker | Pick a color from screen | `gpick`, `xclip` |
+| Quick Note | Type a note, saved to ~/notes.txt with timestamp | `wofi`, `libnotify-bin` |
+| System Monitor | Show CPU, memory, disk, temp, load average | `lm-sensors` (optional, for temp), `libnotify-bin` |
 
 ## Files
 
@@ -33,9 +33,15 @@ mouse-menu.service    # systemd user service for auto-start
 
 ## Prerequisites
 
+Core (required for daemon and menu UI):
 ```bash
-sudo apt install evtest python3-gi gir1.2-gtk-4.0 libnotify-bin \
-    wl-clipboard xclip xdotool wofi tesseract-ocr
+sudo apt install evtest python3-gi gir1.2-gtk-4.0
+```
+
+All action dependencies:
+```bash
+sudo apt install libnotify-bin wl-clipboard xclip wofi \
+    tesseract-ocr gnome-screenshot x11-utils curl git lm-sensors
 ```
 
 Optional:
@@ -43,8 +49,13 @@ Optional:
 sudo apt install gpick    # for Color Picker
 ```
 
-Claude Code must be installed for the Claude actions:
-https://docs.anthropic.com/en/docs/claude-code
+Claude Code (for Claude Code and Claude Selection actions):
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+See https://docs.anthropic.com/en/docs/claude-code
+
+Terminal emulator: The Claude actions use `cosmic-term` (Pop!_OS/COSMIC). Edit `mouse-menu.sh` to replace with your terminal (e.g., `gnome-terminal --`, `kitty`, `alacritty -e`).
 
 ## Mouse Setup
 
