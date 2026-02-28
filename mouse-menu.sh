@@ -21,6 +21,14 @@ case "$choice" in
         # Open interactive Claude Code in a new terminal
         cosmic-term -e bash -c "unset CLAUDECODE; claude; exec bash" &
         ;;
+    "Claude Commit")
+        # Launch Claude Code with /commit skill
+        cosmic-term -e bash -c "unset CLAUDECODE; echo '/commit' | claude; echo; echo 'Press Enter to close'; read" &
+        ;;
+    "Claude Simplify")
+        # Launch Claude Code with /simplify skill
+        cosmic-term -e bash -c "unset CLAUDECODE; echo '/simplify' | claude; echo; echo 'Press Enter to close'; read" &
+        ;;
     "Claude Selection")
         # Grab selected text, send to claude non-interactively, show result
         selection=$(wl-paste -p 2>/dev/null || xclip -selection primary -o 2>/dev/null)

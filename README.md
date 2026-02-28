@@ -10,6 +10,8 @@ Pressing the haptic thumb button on the MX Master 4 pops up a dark-themed menu w
 |--------|-------------|--------------|
 | Claude Code | Opens interactive Claude Code in a new terminal | `claude` ([Claude Code](https://docs.anthropic.com/en/docs/claude-code)), `cosmic-term` |
 | Claude Selection | Sends highlighted text to Claude non-interactively | `claude`, `cosmic-term`, `wl-clipboard` |
+| Claude Commit | Launches Claude Code with `/commit` skill to review and commit changes | `claude`, `cosmic-term` |
+| Claude Simplify | Launches Claude Code with `/simplify` skill to review code for quality | `claude`, `cosmic-term` |
 | DPI Cycle | Cycles through 800/1200/1600/2400/3200 DPI | `ratbagctl` ([libratbag](https://github.com/libratbag/libratbag)), `libnotify-bin` |
 | Screenshot OCR | Select screen region, OCR it, copy text to clipboard | `gnome-screenshot`, `tesseract-ocr`, `xclip`, `libnotify-bin` |
 | Git Status | Show current git branch and status | `git`, `libnotify-bin` |
@@ -166,6 +168,25 @@ free -h; df -h /; uptime
 ```
 
 This means both the human (via haptic thumb button) and the AI agent (via shell) share the same toolkit. The user triggers actions through the GTK4 popup; Claude Code triggers them programmatically. Same actions, two interfaces.
+
+### Bidirectional Skills
+
+Some menu actions are also exposed as Claude Code skills in `~/.claude/skills/`. This creates a bidirectional interface:
+
+| Direction | Interface | Example |
+|-----------|-----------|---------|
+| Human -> Menu | Press haptic thumb button, click action | "System Monitor" shows notification |
+| Agent -> Skill | Type `/system-check` in Claude Code | Claude runs the same commands |
+| Human -> Menu | Click "Claude Commit" | Terminal opens with Claude running `/commit` |
+| Agent -> Skill | Type `/commit` in Claude Code | Claude handles the commit interactively |
+
+Available skills (use inside any Claude Code session):
+
+| Skill | Description |
+|-------|-------------|
+| `/system-check` | CPU, memory, disk, temperature, load average |
+| `/network-info` | Local/public IP, listening ports, VPN status |
+| `/dpi-control` | Change MX Master 4 mouse DPI via ratbagctl |
 
 ## Customization
 

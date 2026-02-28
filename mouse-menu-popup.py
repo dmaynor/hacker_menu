@@ -11,6 +11,9 @@ signal.signal(signal.SIGALRM, lambda *a: os._exit(1))
 items = [
     "Claude Code",
     "Claude Selection",
+    "Claude Commit",
+    "Claude Simplify",
+    "---",
     "DPI Cycle",
     "Screenshot OCR",
     "Git Status",
@@ -39,6 +42,11 @@ class MenuPopup(Gtk.Application):
         win.set_child(box)
 
         for label in items:
+            if label == "---":
+                sep = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
+                sep.add_css_class("menu-sep")
+                box.append(sep)
+                continue
             btn = Gtk.Button(label=label)
             btn.set_has_frame(False)
             btn.connect("clicked", self.on_click, label, win)
@@ -63,6 +71,11 @@ class MenuPopup(Gtk.Application):
             button:hover {
                 background: #16213e;
                 color: #00ff41;
+            }
+            .menu-sep {
+                margin: 4px 16px;
+                min-height: 1px;
+                background: #333;
             }
         """)
         Gtk.StyleContext.add_provider_for_display(
