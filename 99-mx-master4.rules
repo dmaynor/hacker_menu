@@ -1,0 +1,2 @@
+# Allow input group to read MX Master 4 event device
+ACTION=="add", SUBSYSTEM=="input", ATTRS{name}=="MX Master 4 Mouse", MODE="0660", GROUP="input"

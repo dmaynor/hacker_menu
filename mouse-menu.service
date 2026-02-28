@@ -1,0 +1,15 @@
+[Unit]
+Description=MX Master 4 Haptic Thumb Button Menu Daemon
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/bin/mouse-daemon.sh
+Restart=on-failure
+RestartSec=5
+Environment=DISPLAY=:1
+Environment=WAYLAND_DISPLAY=wayland-0
+Environment=XDG_RUNTIME_DIR=/run/user/%U
+
+[Install]
+WantedBy=graphical-session.target
