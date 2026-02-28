@@ -147,6 +147,26 @@ journalctl --user -u mouse-menu
 ~/bin/mouse-daemon.sh
 ```
 
+## Claude Code Agent Usage
+
+The menu actions are also available to Claude Code as an agent. When Claude Code has access to `~/bin`, it can run any action directly from the command line without the GUI, using the same underlying commands:
+
+```bash
+# DPI
+ratbagctl sobbing-paca dpi set 2400
+
+# Git Status
+git -C ~/code/myproject status -sb
+
+# Network Info
+ip -4 addr show scope global | grep inet
+
+# System Monitor
+free -h; df -h /; uptime
+```
+
+This means both the human (via haptic thumb button) and the AI agent (via shell) share the same toolkit. The user triggers actions through the GTK4 popup; Claude Code triggers them programmatically. Same actions, two interfaces.
+
 ## Customization
 
 ### Change the trigger button
